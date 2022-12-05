@@ -87,4 +87,12 @@ services.getPurchases = async (token) => {
     .catch((err) => err);
 };
 
+services.getProductById = async (id) => {
+  const endpoint = `${API_BASE_URL}/products/${id}`;
+
+  return await fetch(endpoint)
+    .then((res) => res.json())
+    .catch((err) => err);
+};
+
 export default services;

@@ -31,7 +31,7 @@ export function Layout({ children }) {
     <>
       <Header setOpenCart={setOpenCart} />
 
-      <main style={{ marginTop: 50, display: "flex" }}>
+      <main style={{ marginTop: 80, display: "flex" }}>
         {/* Hero unit */}
         <div
           style={{
@@ -42,6 +42,7 @@ export function Layout({ children }) {
         >
           <List
             sx={{
+              top: 10,
               position: "fixed",
               width: openCart ? "100%" : "0%",
               height: "100vh",

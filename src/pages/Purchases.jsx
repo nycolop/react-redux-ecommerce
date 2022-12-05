@@ -1,4 +1,3 @@
-import { Button, CardActions, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Layout } from "../components/Layout";
@@ -14,47 +13,70 @@ export default function Purchases() {
       .getPurchases(user.token)
       .then(({ data }) => setPurchases(data.purchases))
       .catch((err) => console.log(err));
-  }, [user]);
+
+    console.log(purchases);
+  }, [user, purchases]);
 
   return (
     <Layout>
-      {/*<div
+      <div
         style={{
           display: "flex",
-          width: "100%",
-          justifyContent: "center",
           flexDirection: "column",
+          width: "100%",
+          gap: 20,
+          alignItems: "center",
         }}
       >
-        <p style={{ paddingTop: 50 }}>sd</p>
-      </div>*/}
-      {purchases.map((purchase) => (
-        <div>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
+        <h2>Mis compras</h2>
+
+        {purchases.map((purchase) => (
+          <div
+            style={{
+              width: "80%",
+              backgroundColor: "#00000080",
+              borderRadius: "10px",
+              minHeight: "300px",
+
+              padding: 15,
+            }}
+          >
+            <h3>
+              {(new Date(purchase.createdAt) + "")
+                .split(" ")
+                .filter((date, index) => (index >= 5 ? false : true))
+                .join(" ")}
+            </h3>
+
+            <ul
+              style={{
+                width: "90%",
+              }}
             >
-              Word of the Day
-            </Typography>
-            <Typography variant="h5" component="div">
-              asd
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </div>
-      ))}
+              {purchase.cart.products.map((product) => (
+                <li
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <p>[{product.productsInCart.quantity}]</p>
+                    <p>{product.title}</p>
+                  </div>
+
+                  <p>
+                    $
+                    {Number(product.productsInCart.quantity) *
+                      Number(product.price)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </Layout>
   );
 }
